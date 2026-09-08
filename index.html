@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Build Mobile Apps with NoCode — NoCode School x Potter's Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<style>
+  :root{
+    --bg-deep:#0A2A1B;
+    --bg-mid:#123A24;
+    --bg-panel:#0E3120;
+    --lime:#8FE05A;
+    --lime-soft:#DFF6C8;
+    --gold:#F2B233;
+    --cream:#F6F3E9;
+    --muted:#A9C2B2;
+    --line: rgba(246,243,233,0.12);
+    --radius: 14px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg-deep);
+    color:var(--cream);
+    font-family:'Inter', sans-serif;
+    line-height:1.5;
+  }
+  h1,h2,h3, .display{
+    font-family:'Space Grotesk', sans-serif;
+    letter-spacing:-0.01em;
+    margin:0;
+  }
+  a{color:inherit;}
+  img,svg{display:block;max-width:100%;}
+  .wrap{
+    max-width:1120px;
+    margin:0 auto;
+    padding:0 24px;
+  }
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky; top:0; z-index:40;
+    background:rgba(10,42,27,0.86);
+    backdrop-filter: blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  nav .wrap{
+    display:flex; align-items:center; justify-content:space-between;
+    height:68px;
+  }
+  .brandmark{
+    display:flex; align-items:center; gap:10px;
+    font-family:'Space Grotesk', sans-serif;
+    font-weight:600; font-size:16px;
+  }
+  .brandmark .dot{width:9px;height:9px;border-radius:50%;background:var(--lime);}
+  .brandmark img.logo-mark{
+    width:30px; height:30px; object-fit:contain;
+  }
+  .brand-sep{opacity:0.4; font-size:14px; margin:0 2px;}
+  .nav-cta{
+    background:var(--lime); color:#08210F;
+    padding:10px 20px; border-radius:100px;
+    font-weight:600; font-size:14px; text-decoration:none;
+    white-space:nowrap;
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:64px 0 56px;
+    background:
+      radial-gradient(700px 420px at 82% -10%, rgba(143,224,90,0.16), transparent 60%),
+      var(--bg-deep);
+  }
+  .hero .wrap{
+    display:grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap:56px;
+    align-items:center;
+  }
+  .badge-pill{
+    display:inline-block;
+    border:1px solid var(--line);
+    color:var(--lime-soft);
+    padding:8px 16px;
+    border-radius:100px;
+    font-size:13px;
+    margin-bottom:22px;
+  }
+  h1.headline{
+    font-size:clamp(34px, 4.6vw, 54px);
+    font-weight:700;
+    line-height:1.06;
+    color:var(--cream);
+  }
+  h1.headline .accent{color:var(--lime);}
+  .sub{
+    margin-top:20px;
+    font-size:17px;
+    color:var(--muted);
+    max-width:46ch;
+  }
+  .hero-actions{
+    margin-top:32px;
+    display:flex; gap:14px; flex-wrap:wrap;
+  }
+  .btn-primary{
+    background:var(--lime); color:#08210F;
+    padding:14px 26px; border-radius:100px;
+    font-weight:600; font-size:15px; text-decoration:none;
+    border:none; cursor:pointer;
+  }
+  .btn-ghost{
+    background:transparent; color:var(--cream);
+    padding:14px 26px; border-radius:100px;
+    font-weight:600; font-size:15px; text-decoration:none;
+    border:1px solid var(--line);
+  }
+  .hero-meta{
+    margin-top:28px;
+    display:flex; gap:22px; color:var(--muted); font-size:13.5px;
+    flex-wrap:wrap;
+  }
+  .hero-meta span{display:flex; align-items:center; gap:7px;}
+  .hero-meta .k{width:6px;height:6px;border-radius:50%;background:var(--gold); display:inline-block;}
+
+  .powered-badge{
+    position:absolute; top:24px; right:24px;
+    display:flex; align-items:center; gap:10px;
+    background:var(--cream); border-radius:12px;
+    padding:8px 14px 8px 8px;
+    box-shadow:0 12px 26px rgba(0,0,0,0.28);
+  }
+  .powered-badge img{ width:38px; height:38px; object-fit:contain; }
+  .powered-badge .txt{ line-height:1.15; }
+  .powered-badge .txt small{ display:block; font-size:10px; color:#5B6E60; letter-spacing:0.02em; }
+  .powered-badge .txt strong{ display:block; font-size:13px; color:#0A2A1B; font-family:'Space Grotesk'; font-weight:700; }
+  header.hero{ position:relative; }
+
+  /* phone illustration */
+  .phone-wrap{ display:flex; justify-content:center; }
+  .phone{
+    width:250px; background:#08210F; border:8px solid #08210F;
+    border-radius:34px; box-shadow: 0 30px 60px rgba(0,0,0,0.45);
+    overflow:hidden;
+  }
+  .phone .screen{ background:var(--cream); border-radius:26px 26px 0 0; }
+  .phone .statusbar{ height:26px; }
+  .app-card{
+    margin:14px; background:var(--bg-panel); color:var(--cream);
+    border-radius:12px; padding:12px;
+  }
+  .app-card h4{font-family:'Space Grotesk'; font-size:13px; margin:0 0 8px;}
+  .row-block{ height:9px; border-radius:5px; background:rgba(246,243,233,0.16); margin-bottom:7px; }
+  .row-block.short{width:60%;}
+  .thumb-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:7px; padding:0 14px 16px; }
+  .thumb{ aspect-ratio:1; border-radius:10px; background:linear-gradient(135deg, var(--lime), #4E9E2F); }
+  .thumb:nth-child(2){background:linear-gradient(135deg, var(--gold), #B5791C);}
+  .thumb:nth-child(3){background:linear-gradient(135deg, #7FD1C9, #2F8C82);}
+  .navbar-fake{ display:flex; justify-content:space-around; padding:12px 0; border-top:1px solid rgba(0,0,0,0.06); }
+  .navbar-fake .di{width:16px;height:16px;border-radius:5px;background:#c9c2ac;}
+  .navbar-fake .di.active{background:#0A2A1B;}
+
+  /* ---------- SECTION shell ---------- */
+  section{ padding:64px 0; }
+  .section-head{ max-width:56ch; margin-bottom:36px; }
+  .eyebrow-line{ color:var(--lime); font-size:13.5px; font-weight:600; margin-bottom:10px; }
+  h2.section-title{ font-size:clamp(26px, 3vw, 34px); font-weight:700; }
+  .section-sub{ color:var(--muted); margin-top:12px; font-size:15.5px; }
+
+  /* ---------- CURRICULUM ---------- */
+  .curriculum{ background:var(--bg-mid); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .steps{ display:flex; flex-direction:column; }
+  .step{
+    display:grid; grid-template-columns:56px 1fr; gap:20px;
+    padding:22px 0; border-top:1px solid var(--line);
+  }
+  .step:last-child{ border-bottom:1px solid var(--line); }
+  .step .num{
+    font-family:'Space Grotesk'; font-size:20px; color:var(--lime);
+    font-weight:600;
+  }
+  .step h3{ font-size:17px; font-weight:600; margin-bottom:6px; }
+  .step p{ color:var(--muted); font-size:14.5px; margin:0; max-width:60ch; }
+
+  /* ---------- PRICING / FORMAT ---------- */
+  .info-grid{
+    display:grid; grid-template-columns:1fr 1fr; gap:24px;
+  }
+  .info-card{
+    background:var(--bg-panel); border:1px solid var(--line);
+    border-radius:var(--radius); padding:28px;
+  }
+  .fee-old{ color:#E27878; text-decoration:line-through; font-size:16px; }
+  .fee-new{ font-family:'Space Grotesk'; font-size:44px; font-weight:700; color:var(--gold); margin-top:6px;}
+  .info-card p.small{ color:var(--muted); font-size:14px; margin-top:14px; }
+  .format-list{ list-style:none; padding:0; margin:14px 0 0; }
+  .format-list li{ padding:8px 0; border-top:1px solid var(--line); font-size:14.5px; color:var(--cream); }
+  .format-list li:first-child{border-top:none;}
+  .format-list b{ color:var(--lime-soft); font-weight:600; }
+
+  /* ---------- REGISTRATION ---------- */
+  .register{ background:var(--bg-deep); }
+  .reg-shell{
+    background:var(--bg-panel); border:1px solid var(--line);
+    border-radius:20px; padding:40px;
+    display:grid; grid-template-columns: 0.9fr 1.1fr; gap:44px;
+  }
+  .reg-shell h2{ font-size:26px; font-weight:700; }
+  .reg-shell .section-sub{margin-top:10px;}
+  .reg-points{ list-style:none; padding:0; margin:26px 0 0; display:flex; flex-direction:column; gap:12px;}
+  .reg-points li{ display:flex; gap:10px; font-size:14.5px; color:var(--muted); }
+  .reg-points .chk{ color:var(--lime); flex-shrink:0; }
+
+  form#regForm{ display:flex; flex-direction:column; gap:14px; }
+  .field label{ display:block; font-size:13px; color:var(--muted); margin-bottom:6px; }
+  .field input, .field select{
+    width:100%; background:var(--bg-deep); border:1px solid var(--line);
+    color:var(--cream); border-radius:10px; padding:13px 14px; font-size:14.5px;
+    font-family:'Inter'; outline:none;
+  }
+  .field input:focus, .field select:focus{ border-color:var(--lime); }
+  .field-row{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .submit-btn{
+    margin-top:6px; background:var(--lime); color:#08210F; border:none;
+    padding:15px 20px; border-radius:10px; font-weight:600; font-size:15px;
+    cursor:pointer;
+  }
+  .submit-btn:disabled{ opacity:0.6; cursor:progress; }
+  .form-msg{ font-size:13.5px; margin-top:4px; min-height:18px; }
+  .form-msg.err{ color:#F0A0A0; }
+  .form-msg.ok{ color:var(--lime); }
+
+  .success-panel{ display:none; text-align:center; }
+  .success-panel.show{ display:block; }
+  .success-panel .check-circle{
+    width:56px; height:56px; border-radius:50%; background:var(--lime);
+    display:flex; align-items:center; justify-content:center; margin:0 auto 18px;
+    color:#08210F; font-size:26px; font-weight:700;
+  }
+  .whatsapp-btn{
+    display:inline-flex; align-items:center; gap:10px;
+    background:#25D366; color:#08210F; font-weight:700;
+    padding:14px 26px; border-radius:100px; text-decoration:none;
+    margin-top:18px; font-size:15px;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{ border-top:1px solid var(--line); padding:34px 0; }
+  footer .wrap{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; }
+  footer .fine{ color:var(--muted); font-size:13px; }
+
+  @media (max-width: 860px){
+    .powered-badge{ position:static; margin-bottom:22px; width:fit-content; }
+    .hero .wrap{ grid-template-columns:1fr; }
+    .phone-wrap{ order:-1; }
+    .info-grid{ grid-template-columns:1fr; }
+    .reg-shell{ grid-template-columns:1fr; padding:26px; }
+    .field-row{ grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brandmark"><span class="dot"></span>NoCode School <span class="brand-sep">×</span> <img class="logo-mark" src="assets/potters-academy-logo.png" alt="Potter's Academy"> Potter's Academy</div>
+    <a href="#register" class="nav-cta">Reserve a seat</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="powered-badge">
+      <img src="assets/potters-academy-logo.png" alt="Potter's Academy">
+      <div class="txt"><small>Powered by</small><strong>Potter's Academy</strong></div>
+    </div>
+    <div>
+      <span class="badge-pill">Unlock your potential in tech</span>
+      <h1 class="headline">Build a real <span class="accent">mobile app</span> in one week — no code required</h1>
+      <p class="sub">A hands-on training where you design, connect and publish your own app using nocode tools. No programming background needed — just a laptop and a week of focus.</p>
+      <div class="hero-actions">
+        <a href="#register" class="btn-primary">Reserve my seat</a>
+        <a href="#curriculum" class="btn-ghost">See what you'll build</a>
+      </div>
+      <div class="hero-meta">
+        <span><i class="k"></i>1 week, hybrid (virtual &amp; physical)</span>
+        <span><i class="k"></i>₦10,000 commitment fee</span>
+        <span><i class="k"></i>Powered by Potter's Academy</span>
+      </div>
+    </div>
+
+    <div class="phone-wrap">
+      <div class="phone">
+        <div class="screen">
+          <div class="statusbar"></div>
+          <div class="app-card">
+            <h4>My App</h4>
+            <div class="row-block"></div>
+            <div class="row-block short"></div>
+          </div>
+          <div class="thumb-grid">
+            <div class="thumb"></div>
+            <div class="thumb"></div>
+            <div class="thumb"></div>
+          </div>
+          <div class="navbar-fake">
+            <div class="di active"></div>
+            <div class="di"></div>
+            <div class="di"></div>
+            <div class="di"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="curriculum" id="curriculum">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow-line">Training highlights</div>
+      <h2 class="section-title">Everything you need to design, build and ship your app</h2>
+      <p class="section-sub">Five stages, in the order you'll actually build a product — from first sketch to your app going live.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="num">01</div>
+        <div><h3>Fundamentals of app design &amp; UI/UX</h3><p>How to create a beautiful, user-friendly app interface people enjoy using.</p></div>
+      </div>
+      <div class="step">
+        <div class="num">02</div>
+        <div><h3>App structure &amp; navigation</h3><p>How to connect screens together and build smooth, logical user flows.</p></div>
+      </div>
+      <div class="step">
+        <div class="num">03</div>
+        <div><h3>Database &amp; data management</h3><p>How to create, manage and connect a database to power your app.</p></div>
+      </div>
+      <div class="step">
+        <div class="num">04</div>
+        <div><h3>Payment integration</h3><p>How to connect payment gateways and process payments in-app.</p></div>
+      </div>
+      <div class="step">
+        <div class="num">05</div>
+        <div><h3>App launch &amp; publishing</h3><p>How to prepare, submit and update your app on the Play Store and App Store.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="details">
+  <div class="wrap">
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="eyebrow-line">Commitment fee</div>
+        <div class="fee-old">₦50,000</div>
+        <div class="fee-new">₦10,000</div>
+        <p class="small">Secures your seat for this cohort. Limited slots — priority given to registrations with a completed form below.</p>
+      </div>
+      <div class="info-card">
+        <div class="eyebrow-line">Format</div>
+        <ul class="format-list">
+          <li><b>Duration:</b> One (1) week</li>
+          <li><b>Mode:</b> Hybrid — virtual &amp; physical</li>
+          <li><b>Who it's for:</b> Beginners, no coding experience needed</li>
+          <li><b>Delivered by:</b> Potter's Academy</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="register" id="register">
+  <div class="wrap">
+    <div class="reg-shell">
+      <div>
+        <div class="eyebrow-line">Registration</div>
+        <h2>Reserve your seat</h2>
+        <p class="section-sub">Fill in your details below. You'll get a confirmation by email, and a link to join the class WhatsApp group right after.</p>
+        <ul class="reg-points">
+          <li><span class="chk">✓</span> Your details are saved securely for the training register.</li>
+          <li><span class="chk">✓</span> A confirmation email is sent immediately.</li>
+          <li><span class="chk">✓</span> You'll be added to the WhatsApp group for class updates.</li>
+        </ul>
+      </div>
+
+      <div>
+        <form id="regForm">
+          <div class="field">
+            <label for="fullName">Full name</label>
+            <input type="text" id="fullName" name="fullName" required placeholder="Your full name">
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="email">Email address</label>
+              <input type="email" id="email" name="email" required placeholder="you@example.com">
+            </div>
+            <div class="field">
+              <label for="phone">WhatsApp number</label>
+              <input type="tel" id="phone" name="phone" required placeholder="080...">
+            </div>
+          </div>
+          <div class="field">
+            <label for="experience">Nocode / tech experience</label>
+            <select id="experience" name="experience">
+              <option value="Complete beginner">Complete beginner</option>
+              <option value="Some experience">Some experience</option>
+              <option value="Comfortable with tech">Comfortable with tech</option>
+            </select>
+          </div>
+          <button type="submit" class="submit-btn" id="submitBtn">Reserve my seat — ₦10,000</button>
+          <div class="form-msg" id="formMsg"></div>
+        </form>
+
+        <div class="success-panel" id="successPanel">
+          <div class="check-circle">✓</div>
+          <h3>You're registered!</h3>
+          <p class="section-sub">Check your email for confirmation. Tap below to join the class WhatsApp group now.</p>
+          <a href="#" id="whatsappLink" class="whatsapp-btn" target="_blank" rel="noopener">Join the WhatsApp group →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="brandmark"><span class="dot"></span>NoCode School <span class="brand-sep">×</span> <img class="logo-mark" src="assets/potters-academy-logo.png" alt="Potter's Academy"> Potter's Academy</div>
+    <div class="fine">© 2026 NoCode School. Powered by Potter's Academy.</div>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   CONFIG — replace these four values before publishing the page
+   ============================================================ */
+const CONFIG = {
+  // Google Apps Script Web App URL (see setup instructions provided alongside this file)
+  GOOGLE_SHEET_WEB_APP_URL: "https://script.google.com/macros/s/AKfycbzyYLIFE8iB_VkTMcU0RoPfkBgvQhEEZyUtpCkZWaBqzn5ZOc_n7U96IN8eKNa4gdL9/exec",
+
+  // EmailJS credentials — from https://dashboard.emailjs.com
+  EMAILJS_PUBLIC_KEY: "oAeqMwksqkeCyjqSk",
+  EMAILJS_SERVICE_ID: "service_q4zlwof",
+  EMAILJS_TEMPLATE_ID: "template_lm4riyq",
+
+  // Your WhatsApp group invite link
+  WHATSAPP_GROUP_LINK: "https://chat.whatsapp.com/Cj4PHSpWujBIIUtdK5254T"
+};
+/* ============================================================ */
+
+if (window.emailjs && CONFIG.EMAILJS_PUBLIC_KEY.indexOf("PASTE_") !== 0) {
+  emailjs.init({ publicKey: CONFIG.EMAILJS_PUBLIC_KEY });
+}
+
+document.getElementById('whatsappLink').href = CONFIG.WHATSAPP_GROUP_LINK;
+
+const form = document.getElementById('regForm');
+const submitBtn = document.getElementById('submitBtn');
+const formMsg = document.getElementById('formMsg');
+const successPanel = document.getElementById('successPanel');
+
+form.addEventListener('submit', async function (e) {
+  e.preventDefault();
+  formMsg.textContent = '';
+  formMsg.className = 'form-msg';
+
+  const data = {
+    fullName: document.getElementById('fullName').value.trim(),
+    email: document.getElementById('email').value.trim(),
+    phone: document.getElementById('phone').value.trim(),
+    experience: document.getElementById('experience').value,
+    timestamp: new Date().toISOString()
+  };
+
+  if (!data.fullName || !data.email || !data.phone) {
+    formMsg.textContent = 'Please fill in all required fields.';
+    formMsg.classList.add('err');
+    return;
+  }
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Submitting...';
+
+  try {
+    // 1. Save to Google Sheet
+    if (CONFIG.GOOGLE_SHEET_WEB_APP_URL.indexOf("PASTE_") !== 0) {
+      await fetch(CONFIG.GOOGLE_SHEET_WEB_APP_URL, {
+        method: 'POST',
+        mode: 'no-cors', // Apps Script web apps commonly require no-cors from the browser
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(data)
+      });
+    }
+
+    // 2. Send confirmation email via EmailJS
+    if (CONFIG.EMAILJS_SERVICE_ID.indexOf("PASTE_") !== 0) {
+      await emailjs.send(CONFIG.EMAILJS_SERVICE_ID, CONFIG.EMAILJS_TEMPLATE_ID, {
+        to_name: data.fullName,
+        to_email: data.email,
+        phone: data.phone,
+        experience: data.experience
+      });
+    }
+
+    // 3. Show success + WhatsApp CTA
+    form.style.display = 'none';
+    successPanel.classList.add('show');
+
+  } catch (err) {
+    console.error(err);
+    formMsg.textContent = 'Something went wrong. Please try again or reach out directly.';
+    formMsg.classList.add('err');
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Reserve my seat — ₦10,000';
+  }
+});
+</script>
+
+</body>
+</html>
