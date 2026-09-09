@@ -142,6 +142,74 @@
   .powered-badge .txt strong{ display:block; font-size:13px; color:#0A2A1B; font-family:'Space Grotesk'; font-weight:700; }
   header.hero{ position:relative; }
 
+  /* ---------- animated background layer ---------- */
+  .bg-layer{
+    position:fixed; inset:0; overflow:hidden;
+    pointer-events:none; z-index:-1;
+  }
+  .bg-glow{
+    position:absolute; border-radius:50%; filter:blur(80px);
+  }
+  .bg-glow.g1{
+    width:460px; height:460px; background:var(--lime); opacity:0.16;
+    top:-140px; left:-120px; animation:driftA 28s ease-in-out infinite;
+  }
+  .bg-glow.g2{
+    width:420px; height:420px; background:var(--gold); opacity:0.12;
+    bottom:-160px; right:-100px; animation:driftB 34s ease-in-out infinite;
+  }
+  .bg-glow.g3{
+    width:320px; height:320px; background:var(--lime); opacity:0.08;
+    top:40%; right:10%; animation:driftC 40s ease-in-out infinite;
+  }
+  @keyframes driftA{
+    0%,100%{ transform:translate(0,0); }
+    50%{ transform:translate(70px,90px); }
+  }
+  @keyframes driftB{
+    0%,100%{ transform:translate(0,0); }
+    50%{ transform:translate(-60px,-80px); }
+  }
+  @keyframes driftC{
+    0%,100%{ transform:translate(0,0) scale(1); }
+    50%{ transform:translate(-40px,50px) scale(1.15); }
+  }
+  .doodle{
+    position:absolute; opacity:0.11; stroke:var(--lime);
+    fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round;
+  }
+  .doodle.gold{ stroke:var(--gold); }
+  .doodle.float-a{ animation:floatA 9s ease-in-out infinite; }
+  .doodle.float-b{ animation:floatB 11s ease-in-out infinite; }
+  .doodle.float-c{ animation:floatC 13s ease-in-out infinite; }
+  @keyframes floatA{
+    0%,100%{ transform:translateY(0) rotate(0deg); }
+    50%{ transform:translateY(-18px) rotate(8deg); }
+  }
+  @keyframes floatB{
+    0%,100%{ transform:translateY(0) rotate(0deg); }
+    50%{ transform:translateY(16px) rotate(-7deg); }
+  }
+  @keyframes floatC{
+    0%,100%{ transform:translate(0,0) rotate(0deg); }
+    50%{ transform:translate(10px,-12px) rotate(5deg); }
+  }
+  @media (max-width:700px){
+    .doodle{ opacity:0.07; }
+    .bg-glow{ filter:blur(50px); }
+  }
+
+  /* doodles */
+  .doodle{ position:absolute; pointer-events:none; z-index:2; }
+  .doodle-underline{ left:2px; bottom:-10px; width:230px; }
+  .doodle-sparkle-1{ top:-14px; right:-6px; width:34px; }
+  .doodle-sparkle-2{ bottom:6px; left:-30px; width:22px; opacity:0.8; }
+  .doodle-arrow-cta{ top:56px; right:-58px; width:70px; display:none; }
+  .doodle-circle-fee{ top:-14px; left:-16px; width:160px; }
+  .doodle-eyebrow-swirl{ display:inline-block; width:26px; height:14px; margin-left:6px; vertical-align:middle; }
+  @media (min-width:1000px){ .doodle-arrow-cta{ display:block; } }
+  @media (max-width:860px){ .doodle-arrow-cta{ display:none !important; } }
+
   /* hero app photo */
   .phone-wrap{ display:flex; justify-content:center; }
   .phone-photo{
@@ -249,6 +317,60 @@
 </style>
 </head>
 <body>
+
+<div class="bg-layer" aria-hidden="true">
+  <div class="bg-glow g1"></div>
+  <div class="bg-glow g2"></div>
+  <div class="bg-glow g3"></div>
+
+  <!-- sparkle -->
+  <svg class="doodle float-a" style="top:8%; left:6%; width:46px;" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+    <path d="M20 2 L23 17 L38 20 L23 23 L20 38 L17 23 L2 20 L17 17 Z"/>
+  </svg>
+
+  <!-- squiggly line -->
+  <svg class="doodle float-b" style="top:20%; right:8%; width:90px;" viewBox="0 0 100 30" xmlns="http://www.w3.org/2000/svg">
+    <path d="M2 15 Q15 2 28 15 T54 15 T80 15 T98 15"/>
+  </svg>
+
+  <!-- code brackets -->
+  <svg class="doodle gold float-c" style="top:38%; left:3%; width:56px;" viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg">
+    <path d="M22 4 C14 4 12 8 12 14 C12 20 8 20 8 20 C8 20 12 20 12 26 C12 32 14 36 22 36"/>
+    <path d="M38 4 C46 4 48 8 48 14 C48 20 52 20 52 20 C52 20 48 20 48 26 C48 32 46 36 38 36"/>
+  </svg>
+
+  <!-- lightning bolt -->
+  <svg class="doodle gold float-a" style="top:55%; right:5%; width:34px;" viewBox="0 0 30 46" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 2 L4 26 L14 26 L10 44 L26 18 L15 18 Z"/>
+  </svg>
+
+  <!-- wifi / signal arcs -->
+  <svg class="doodle float-b" style="top:70%; left:8%; width:60px;" viewBox="0 0 60 44" xmlns="http://www.w3.org/2000/svg">
+    <path d="M4 24 C20 6 40 6 56 24"/>
+    <path d="M14 32 C24 22 36 22 46 32"/>
+    <circle cx="30" cy="40" r="2" fill="var(--lime)" stroke="none"/>
+  </svg>
+
+  <!-- cursor click -->
+  <svg class="doodle float-c" style="top:14%; left:44%; width:34px;" viewBox="0 0 30 34" xmlns="http://www.w3.org/2000/svg">
+    <path d="M4 2 L4 26 L11 20 L15 30 L19 28 L15 18 L24 18 Z" stroke-linejoin="round"/>
+  </svg>
+
+  <!-- dotted orbit ring -->
+  <svg class="doodle gold float-b" style="top:82%; right:14%; width:70px;" viewBox="0 0 70 70" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="35" cy="35" r="30" stroke-dasharray="1 8"/>
+  </svg>
+
+  <!-- puzzle piece -->
+  <svg class="doodle float-a" style="top:46%; left:88%; width:44px;" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+    <path d="M10 4 H22 C22 -1 30 -1 30 4 H40 V14 C45 14 45 22 40 22 V32 H30 C30 37 22 37 22 32 H10 V22 C5 22 5 14 10 14 Z"/>
+  </svg>
+
+  <!-- small sparkle bottom -->
+  <svg class="doodle float-c" style="top:92%; left:30%; width:26px;" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+    <path d="M20 2 L23 17 L38 20 L23 23 L20 38 L17 23 L2 20 L17 17 Z"/>
+  </svg>
+</div>
 
 <nav>
   <div class="wrap">
